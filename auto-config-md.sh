@@ -8,19 +8,19 @@ read size
 echo "(Recomendado)¿Desea reiniciar automaticamente despues de aplicar los cambios?[y/n]"
 read reset
 if [ "$aliax" = "y" ]; then
-  sh sources/scriptaliasrpi.sh
+  bash sources/scriptaliasrpi.sh
 fi
 
 if [ "$fondo" = "y" ]; then
-  sh sources/scriptbackground.sh
+  bash sources/scriptbackground.sh
 fi
 
 if [ "$size" = "y" ]; then
-  sh sources/scriptscreensize.sh
+  bash sources/scriptscreensize.sh
 fi
 
-if [ "$aliax" = "y" || "$fondo" = "y" || "$size" = "y" ]; then
-  if [ "$reset" = "y" ]; then
+if [ "$aliax" == "y" -o "$fondo" == "y" -o "$size" -o "y" ] ; then
+  if [[ "$reset" = "y" ]] ; then
     shutdown -r now
   fi
 else
