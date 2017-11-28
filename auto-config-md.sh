@@ -8,15 +8,15 @@ read size
 echo "(Recomendado)¿Desea reiniciar automaticamente despues de aplicar los cambios?[y/n]"
 read reset
 if [ "$aliax" = "y" ]; then
-  sudo sh sources/scriptaliasrpi.sh
+  sh sources/scriptaliasrpi.sh
 fi
 
 if [ "$fondo" = "y" ]; then
-  sudo sh sources/scriptbackground.sh
+  sh sources/scriptbackground.sh
 fi
 
 if [ "$size" = "y" ]; then
-  sudo sh sources/scriptscreensize.sh
+  sh sources/scriptscreensize.sh
 fi
 
 if [ "$aliax" = "y" || "$fondo" = "y" || "$size" = "y" ]; then

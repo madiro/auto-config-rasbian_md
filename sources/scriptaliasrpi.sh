@@ -9,11 +9,13 @@ if [ "$no_duplicates" -eq "0" ]; then
 	alias instalar='sudo apt-get update && sudo apt-get install'
 	alias actualizar='sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoclean && sudo apt-get autoremove'
 	alias buscar='apt-cache search'
-	alias desinstalar='sudo apt-get purge'" | sudo tee -a /home/$USER/.bashrc
-	echo "[ OK ] Los alias se han insertado correctamente"
-
+	alias desinstalar='sudo apt-get purge'" | tee -a /home/$USER/.bashrc
+	if [ "$?" -eq 0 ]; then
+		echo "[ OK ] Registro de alias .bashrc"
+	else
+		echo "[FAIL] Registro de alias .bashrc"
+	fi
 else
-
-	echo "[ OK ] Los alias que intenta registrar ya estan disponibles"
-
+	
+	echo "[ OK ] Los alias ya estaban registrados, saltando paso"
 fi
