@@ -9,5 +9,6 @@ Este script configura automaticamente:
 Instrucciones:
 
   - $ git clone https://github.com/madiro/auto-config-raspbian_md
-  - $ bash auto-config-raspbian_md/auto-config-md.sh
+  - $ cd auto-config-raspbian_md
+  - $ bash auto-config-md.sh
   
