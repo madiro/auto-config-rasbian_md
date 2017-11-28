@@ -12,11 +12,11 @@ if [ "$alias" = "y" ]; then
 fi
 
 if [ "$fondo" = "y" ]; then
-sudo sh sources/scriptbackground.sh
+  sudo sh sources/scriptbackground.sh
 fi
 
 if [ "$size" = "y" ]; then
-sudo sh sources/scriptscreensize.sh
+  sudo sh sources/scriptscreensize.sh
 fi
 
 if [ "$alias" = "y" || "$fondo" = "y" || "$size" = "y"]; then
