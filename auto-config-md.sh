@@ -1,11 +1,11 @@
 #! /bin/bash
-echo "¿Desea ingresar alias?[y/n]
+echo "¿Desea ingresar alias?[y/n]"
 read alias
-echo "¿Desea poner un fondo de pantalla negro solido?[y/n]
+echo "¿Desea poner un fondo de pantalla negro solido?[y/n]"
 read fondo
-echo "¿Desea cambiar el tamaño de pantalla a HDMI 1920x1080?[y/n]
+echo "¿Desea cambiar el tamaño de pantalla a HDMI 1920x1080?[y/n]"
 read size
-echo "(Recomendado)¿Desea reiniciar automaticamente despues de aplicar los cambios?[y/n]
+echo "(Recomendado)¿Desea reiniciar automaticamente despues de aplicar los cambios?[y/n]"
 read reset
 if [ "$alias" = "y" ]; then
   sudo sh sources/scriptaliasrpi.sh
