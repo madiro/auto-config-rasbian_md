@@ -1,4 +1,4 @@
-no_duplicates=`grep -c "0x4004" /home/pi/.bashrc`
+no_duplicates=`grep -c "0x4004" /home/$USER/.bashrc`
 
 if [ "$no_duplicates" -eq "0" ]; then
 
@@ -9,7 +9,7 @@ if [ "$no_duplicates" -eq "0" ]; then
 	alias instalar='sudo apt-get update && sudo apt-get install'
 	alias actualizar='sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoclean && sudo apt-get autoremove'
 	alias buscar='apt-cache search'
-	alias desinstalar='sudo apt-get purge'" | sudo tee -a /home/pi/.bashrc
+	alias desinstalar='sudo apt-get purge'" | sudo tee -a /home/$USER/.bashrc
 	echo "[ OK ] Los alias se han insertado correctamente"
 
 else
