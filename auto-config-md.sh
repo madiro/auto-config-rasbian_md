@@ -19,7 +19,7 @@ if [ "$size" = "y" ]; then
   sudo sh sources/scriptscreensize.sh
 fi
 
-if [ "$aliax" = "y" || "$fondo" = "y" || "$size" = "y"]; then
+if [ "$aliax" = "y" || "$fondo" = "y" || "$size" = "y" ]; then
   if [ "$reset" = "y" ]; then
     shutdown -r now
   fi
