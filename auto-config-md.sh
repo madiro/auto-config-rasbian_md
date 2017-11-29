@@ -197,7 +197,7 @@ read kernelup
 echo -n "¿Desea cambiar el aspecto de la consola?[y/n]"
 read custom
 echo -n "¿Desea aumentar el tamaño de la fuente Desktop?[y/n]"
-read sizeDesktop
+read sizeDesktop 
 echo -n "¿Desea ingresar alias?[y/n]"
 read aliax
 echo -n "¿Desea poner un fondo de pantalla negro solido?[y/n]"
@@ -212,7 +212,7 @@ fi
 if [ "$aliax" = "y" ]; then
 	aliaTerminal
 fi
-fi [ "$sizeDesktop" = "y" ]; then
+if [ "$sizeDesktop" = "y" ]; then
 	fuentesDesktop
 fi
 if [ "$fondo" = "y" ]; then
