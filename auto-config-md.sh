@@ -213,7 +213,7 @@ if [ "$aliax" = "y" ]; then
 	aliaTerminal
 fi
 if [ "$sizeDesktop" = "y" ]; then
-	fuentesDesktop
+	fuenteDesktop
 fi
 if [ "$fondo" = "y" ]; then
 	fondoPantalla
