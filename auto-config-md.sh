@@ -204,7 +204,7 @@ fi
 if [ "$kernelup" = "y" ]; then
 	kernelUpdate
 fi
-if [ "$aliax" == "y" -o "$fondo" == "y" -o "$size" -o "y" -o "$custom" = "y" ] ; then
+if [ "$aliax" == "y" -o "$fondo" == "y" -o "$size" == "y" -o "$custom" = "y" ] ; then
   if [[ "$reset" = "y" ]] ; then
     shutdown -r now
   fi
