@@ -62,7 +62,25 @@ else
 	fi
 fi
 }
-
+function kernelUpdate() {
+	sudo rpi-update
+}
+function actualizarSistema() {
+	sudo apt-get update
+	aux1=$?
+	sudo apt-get -y upgrade
+	aux2=$?
+	sudo apt-get autoclean
+	aux3=$?
+	sudo apt-get -y autoremove
+	aux4=$?
+	let aux=$aux1+$aux2+$aux3+$aux4
+	if [ "$aux" -eq 0 ]; then
+		echo "[ OK ] Actualizacion del sistema"
+	else
+		echo "[FAIL] Actualizacion del sistema"
+	fi
+}
 
 function aliaTerminal() {
 	no_duplicates=`grep -c "0x4004" /home/$USER/.bashrc`
@@ -148,6 +166,10 @@ function resolucionPantalla() {
 	        fi
 	fi
 }
+echo -n "¿Desea actualizar todo el sistema?[y/n]"
+read actualizar
+ehco -n "¿Desea actualizar el kernel de Raspbian?[y/n]
+read kernelup
 echo -n "¿Desea cambiar el aspecto de la consola?[y/n]"
 read custom
 echo -n "¿Desea ingresar alias?[y/n]"
@@ -158,6 +180,9 @@ echo -n "¿Desea cambiar el tamaño de pantalla a HDMI 1920x1080?[y/n]"
 read size
 echo -n "(Recomendado)¿Desea reiniciar automaticamente despues de aplicar los cambios?[y/n]"
 read reset
+if [ "$actualizar" = "y" ]; then
+	actualizarSistema
+fi
 if [ "$aliax" = "y" ]; then
 	aliaTerminal
 fi
@@ -171,7 +196,10 @@ if [ "$size" = "y" ]; then
 fi
 if [ "$custom" = "y" ]; then
 	customTerminal	
-fi	
+fi
+if [ "$kernelup" = "y" ]; then
+	kernelUpdate
+fi
 if [ "$aliax" == "y" -o "$fondo" == "y" -o "$size" -o "y" -o "$custom" = "y" ] ; then
   if [[ "$reset" = "y" ]] ; then
     shutdown -r now
