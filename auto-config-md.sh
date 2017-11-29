@@ -81,7 +81,17 @@ function actualizarSistema() {
 		echo "[FAIL] Actualizacion del sistema"
 	fi
 }
-
+function cambiarIdioma() {
+	sudo dpkg-reconfigure locales
+	if [ "$?" -eq 0 ]; then
+		echo "[ OK ] Idioma cambiado"
+	else
+		echo "[FAIL] Idioma cambiado"
+	fi
+}
+function contraseña() {
+	sudo passwd $USER
+}
 function aliaTerminal() {
 	no_duplicates=`grep -c "0x4004" /home/$USER/.bashrc`
 	if [ "$no_duplicates" -eq "0" ]; then
@@ -123,8 +133,8 @@ function fuenteDesktop() {
 		echo "Omitiendo paso"
 		return
 	fi
-	sed -i 's/desktop_font=.*/desktop_font=Monospace 17/' /home/$USER/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
-	sed -i 's/FontName=.*/FontName=Monospace 17/' /home/$USER/.config/lxsession/LXDE-pi/desktop.conf
+	sed -i 's/desktop_font=.*/desktop_font=Droid Sans Fallback 17/' /home/$USER/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
+	sed -i 's/FontName=.*/FontName=Droid Sans Fallback 17/' /home/$USER/.config/lxsession/LXDE-pi/desktop.conf
 	
 }
 function fondoPantalla() {
@@ -190,6 +200,10 @@ function resolucionPantalla() {
 	        fi
 	fi
 }
+echo -n "¿Desea cambiar el idioma a Español?[y/n]"
+read idioma
+echo -n "¿Desea cambiar la contraseña del usuario $USER?[y/n]"
+read modpass
 echo -n "¿Desea actualizar todo el sistema?[y/n]"
 read actualizar
 echo -n "¿Desea actualizar el kernel de Raspbian?[y/n]"
@@ -206,6 +220,14 @@ echo -n "¿Desea cambiar el tamaño de pantalla a HDMI 1920x1080?[y/n]"
 read size
 echo -n "(Recomendado)¿Desea reiniciar automaticamente despues de aplicar los cambios?[y/n]"
 read reset
+
+
+if [ "$idioma" = "y" ]; then
+	cambiarIdioma
+fi
+if [ "$modpass" = "y" ]; then
+	contraseña
+fi
 if [ "$actualizar" = "y" ]; then
 	actualizarSistema
 fi
@@ -218,7 +240,6 @@ fi
 if [ "$fondo" = "y" ]; then
 	fondoPantalla
 fi
-
 if [ "$size" = "y" ]; then
  	resolucionPantalla
 fi
