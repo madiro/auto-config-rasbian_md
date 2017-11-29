@@ -109,7 +109,24 @@ function aliaTerminal() {
 	        echo "[ OK ] Los alias ya estaban registrados, saltando paso"
 	fi
 }
-
+function fuenteDesktop() {
+	echo -n "Creando copia de seguridad Desktop..."
+	cp /home/pi/.config/pcmanfm/LXDE-pi/desktop-items-0.conf /home/pi/.config/pcmanfm/LXDE-pi/desktop-items-0.conf.backup
+	aux1=$?
+	cp /home/pi/.config/lxsession/LXDE-pi/desktop.conf /home/pi/.config/lxsession/LXDE-pi/desktop.conf.backup
+	aux2=$?
+	let aux=$aux1+$aux2
+	if [ "$aux" -eq 0 ]; then
+		echo "OK"
+	else
+		echo "FAIL"
+		echo "Omitiendo paso"
+		return
+	fi
+	sed -i 's/desktop_font=.*/desktop_font=Monospace 17/' /home/$USER/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
+	sed -i 's/sGtk/FontName=.*/sGtk/FontName=Monospace 17/' /home/$USER/.config/lxsession/LXDE-pi/desktop.conf
+	
+}
 function fondoPantalla() {
 	sed -i 's/wallpaper_mode=.*/wallpaper_mode=color/'   /home/$USER/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
 	var1=$?
@@ -179,6 +196,8 @@ echo -n "¿Desea actualizar el kernel de Raspbian?[y/n]"
 read kernelup
 echo -n "¿Desea cambiar el aspecto de la consola?[y/n]"
 read custom
+echo -n "¿Desea aumentar el tamaño de la fuente Desktop?[y/n]"
+read sizeDesktop
 echo -n "¿Desea ingresar alias?[y/n]"
 read aliax
 echo -n "¿Desea poner un fondo de pantalla negro solido?[y/n]"
@@ -193,7 +212,9 @@ fi
 if [ "$aliax" = "y" ]; then
 	aliaTerminal
 fi
-
+fi [ "$sizeDesktop" = "y" ]; then
+	fuentesDesktop
+fi
 if [ "$fondo" = "y" ]; then
 	fondoPantalla
 fi
