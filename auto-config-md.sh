@@ -96,8 +96,11 @@ function aliaTerminal() {
 		alias borrarr='rm -rf'
 		alias clonargithub='git clone https://github.com/'
 	        alias desinstalar='sudo apt-get purge'" | tee -a /home/$USER/.bashrc
-		
-	        if [ "$?" -eq 0 ]; then
+		aux1=$?
+		source /home/$USER/.bashrc
+		aux2=$?
+		let aux=$aux1+$aux2
+	        if [ "aux" -eq 0 ]; then
 	                echo "[ OK ] Registro de alias .bashrc"
         	else
 	                echo "[FAIL] Registro de alias .bashrc"
