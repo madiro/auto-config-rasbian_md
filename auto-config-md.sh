@@ -66,7 +66,6 @@ fi
 
 function aliaTerminal() {
 	no_duplicates=`grep -c "0x4004" /home/$USER/.bashrc`
-echo "entra en la funcion alias"
 	if [ "$no_duplicates" -eq "0" ]; then
         	echo "
 	        #Alias 0x4004
