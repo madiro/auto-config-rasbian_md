@@ -124,7 +124,7 @@ function fuenteDesktop() {
 		return
 	fi
 	sed -i 's/desktop_font=.*/desktop_font=Monospace 17/' /home/$USER/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
-	sed -i 's/.*FontName=.*/&FontName=Monospace 17/' /home/$USER/.config/lxsession/LXDE-pi/desktop.conf
+	sed -i 's/FontName=.*/FontName=Monospace 17/' /home/$USER/.config/lxsession/LXDE-pi/desktop.conf
 	
 }
 function fondoPantalla() {
