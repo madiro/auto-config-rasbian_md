@@ -92,7 +92,10 @@ function aliaTerminal() {
 	        alias instalar='sudo apt-get update && sudo apt-get install'
 	        alias actualizar='sudo apt-get update && sudo apt-get upgrade && sudo a$
 	        alias buscar='apt-cache search'
+		alias borrar='rm"
+		alias borrarr='rm -rf'
 	        alias desinstalar='sudo apt-get purge'" | tee -a /home/$USER/.bashrc
+		
 	        if [ "$?" -eq 0 ]; then
 	                echo "[ OK ] Registro de alias .bashrc"
         	else
