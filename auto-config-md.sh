@@ -90,7 +90,7 @@ function aliaTerminal() {
 	        alias apagar='sudo shutdown -h now'
 	        alias reiniciar='sudo shutdown -r now'
 	        alias instalar='sudo apt-get update && sudo apt-get install'
-	        alias actualizar='sudo apt-get update && sudo apt-get upgrade && sudo a$
+	        alias actualizar='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get autoclean && sudo apt-get -y autoremove'
 	        alias buscar='apt-cache search'
 		alias borrar='rm'
 		alias borrarr='rm -rf'
