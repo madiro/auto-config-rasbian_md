@@ -1,60 +1,68 @@
 #! /bin/bash
 function customTerminal() {
-[general]
-fontname=Courier New 18
-selchars=-A-Za-z0-9,./?%&#:_
-scrollback=1000
-bgcolor=#000000000000
-bgalpha=65535
-fgcolor=#d3d3d7d7cfcf
-palette_color_0=#000000000000
-palette_color_1=#cdcd00000000
-palette_color_2=#4e4e9a9a0606
-palette_color_3=#c4c4a0a00000
-palette_color_4=#34346565a4a4
-palette_color_5=#757550507b7b
-palette_color_6=#060698989a9a
-palette_color_7=#d3d3d7d7cfcf
-palette_color_8=#555557575353
-palette_color_9=#efef29292929
-palette_color_10=#8a8ae2e23434
-palette_color_11=#fcfce9e94f4f
-palette_color_12=#72729f9fcfcf
-palette_color_13=#adad7f7fa8a8
-palette_color_14=#3434e2e2e2e2
-palette_color_15=#eeeeeeeeecec
-color_preset=Tango
-disallowbold=false
-cursorblinks=false
-cursorunderline=false
-audiblebell=false
-tabpos=top
-geometry_columns=80
-geometry_rows=24
-hidescrollbar=false
-hidemenubar=false
-hideclosebutton=false
-hidepointer=false
-disablef10=false
-disablealt=false
-disableconfirm=false
+cp /home/$USER/.config/lxterminal/lxterminal.conf /home/$USER/.config/lxterminal/lxterminal.conf.backup
+sed -i 's/.*fontname=.*/fontname=Courier New 18/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux1=$?
+sed -i 's/.*bgcolor=.*/bgcolor=#000000000000/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux2=$?
+sed -i 's/.*bgalpha=.*/bgalpha=65535/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux3=$?
+sed -i 's/.*fgcolor=.*/fgcolor=#d3d3d7d7cfcf/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux4=$?
+sed -i 's/.*palette_color_0=.*/palette_color_0=#000000000000/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux5=$?
+sed -i 's/.*palette_color_1=.*/palette_color_1=#cdcd00000000/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux6=$?
+sed -i 's/.*palette_color_2=.*/palette_color_2=#4e4e9a9a0606/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux7=$?
+sed -i 's/.*palette_color_3=.*/palette_color_3=#c4c4a0a00000/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux8=$?
+sed -i 's/.*palette_color_4=.*/palette_color_4=#34346565a4a4/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux9=$?
+sed -i 's/.*palette_color_5=.*/palette_color_5=#757550507b7b/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux10=$?
+sed -i 's/.*palette_color_6=.*/palette_color_6=#060698989a9a/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux11=$?
+sed -i 's/.*palette_color_7=.*/palette_color_7=#d3d3d7d7cfcf/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux12=$?
+sed -i 's/.*palette_color_8=.*/palette_color_8=#555557575353/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux13=$?
+sed -i 's/.*palette_color_9=.*/palette_color_9=#efef29292929/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux14=$?
+sed -i 's/.*palette_color_10=.*/palette_color_10=#8a8ae2e23434/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux15=$?
+sed -i 's/.*palette_color_11=.*/palette_color_11=#fcfce9e94f4f/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux16=$?
+sed -i 's/.*palette_color_12=.*/palette_color_12=#72729f9fcfcf/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux17=$?
+sed -i 's/.*palette_color_13=.*/palette_color_13=#adad7f7fa8a8/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux18=$?
+sed -i 's/.*palette_color_14=.*/palette_color_14=#3434e2e2e2e2/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux19=$?
+sed -i 's/.*palette_color_15=.*/palette_color_15=#eeeeeeeeecec/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux20=$?
+sed -i 's/.*color_preset=.*/color_preset=Tango/' /home/$USER/.config/lxterminal/lxterminal.conf
+aux21=$?
 
-[shortcut]
-new_window_accel=<CTRL><SHIFT>N
-new_tab_accel=<CTRL><SHIFT>T
-close_tab_accel=<CTRL><SHIFT>W
-close_window_accel=<CTRL><SHIFT>Q
-copy_accel=<CTRL><SHIFT>C
-paste_accel=<CTRL><SHIFT>V
-name_tab_accel=<CTRL><SHIFT>I
-previous_tab_accel=<CTRL>Page_Up
-next_tab_accel=<CTRL>Page_Down
-move_tab_left_accel=<CTRL><SHIFT>Page_Up
-move_tab_right_accel=<CTRL><SHIFT>Page_Down
-zoom_in_accel=<CTRL>plus
-zoom_out_accel=<CTRL>underscore
-zoom_reset_accel=<CTRL>parenright
+let aux=$aux1+$aux2+$aux3+$aux4+$aux5+$aux6+$aux7+$aux8+$aux9+$aux10+$aux11+$aux12+$aux13+$aux14+$aux15+$aux16+$aux17+$aux18+$aux19+$aux20+$aux21
+if [ "$aux" -eq 0 ] ; then
+	echo "[ OK ] Terminal personalizado"
+else
+	echo "[FAIL] Terminal personalizado"
+	echo -n "Restaurando configuracion original..."
+	mv /home/$USER/.config/lxterminal/lxterminal.conf /home/$USER/.config/lxterminal/lxterminal.conf.fail
+	mov1=$?
+	mv /home/$USER/.config/lxterminal/lxterminal.conf.backup /home/$USER/.config/lxterminal/lxterminal.conf
+	mov2=$?
+	let movT=$mov1+$mov2
+	if [[ "$movT" -eq 0 ]]; then
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+fi
 }
+
 
 function aliaTerminal() {
 	no_duplicates=`grep -c "0x4004" /home/$USER/.bashrc`
@@ -141,6 +149,8 @@ function resolucionPantalla() {
 	        fi
 	fi
 }
+echo -n "¿Desea cambiar el aspecto de la consola?[y/n]"
+read custom
 echo -n "¿Desea ingresar alias?[y/n]"
 read aliax
 echo -n "¿Desea poner un fondo de pantalla negro solido?[y/n]"
@@ -150,21 +160,20 @@ read size
 echo -n "(Recomendado)¿Desea reiniciar automaticamente despues de aplicar los cambios?[y/n]"
 read reset
 if [ "$aliax" = "y" ]; then
-	# bash sources/scriptaliasrpi.sh
 	aliaTerminal
 fi
 
 if [ "$fondo" = "y" ]; then
-	#bash sources/scriptbackground.sh
 	fondoPantalla
 fi
 
 if [ "$size" = "y" ]; then
-	#bash sources/scriptscreensize.sh
  	resolucionPantalla
 fi
-
-if [ "$aliax" == "y" -o "$fondo" == "y" -o "$size" -o "y" ] ; then
+if [ "$custom" = "y" ]; then
+	customTerminal	
+fi	
+if [ "$aliax" == "y" -o "$fondo" == "y" -o "$size" -o "y" -o "$custom" = "y" ] ; then
   if [[ "$reset" = "y" ]] ; then
     shutdown -r now
   fi
