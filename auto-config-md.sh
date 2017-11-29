@@ -172,7 +172,7 @@ function resolucionPantalla() {
 }
 echo -n "¿Desea actualizar todo el sistema?[y/n]"
 read actualizar
-ehco -n "¿Desea actualizar el kernel de Raspbian?[y/n]
+ehco -n "¿Desea actualizar el kernel de Raspbian?[y/n]"
 read kernelup
 echo -n "¿Desea cambiar el aspecto de la consola?[y/n]"
 read custom
