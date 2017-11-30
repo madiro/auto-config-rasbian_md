@@ -46,9 +46,9 @@ function customTerminal() {
 
 	let aux=$aux1+$aux2+$aux3+$aux4+$aux5+$aux6+$aux7+$aux8+$aux9+$aux10+$aux11+$aux12+$aux13+$aux14+$aux15+$aux16+$aux17+$aux18+$aux19+$aux20+$aux21
 	if [ "$aux" -eq 0 ] ; then
-		echo "[ OK ] Terminal personalizado"
+		echo -e "[ \e[1;32mOK\e[0m ] Terminal personalizado"
 	else
-		echo "[FAIL] Terminal personalizado"
+		echo -e "[ \e[1;31mFAIL\e[0m ] Terminal personalizado"
 		echo -n "Restaurando configuracion original..."
 		mv /home/$USER/.config/lxterminal/lxterminal.conf /home/$USER/.config/lxterminal/lxterminal.conf.fail
 		mov1=$?
@@ -76,17 +76,17 @@ function actualizarSistema() {
 	aux4=$?
 	let aux=$aux1+$aux2+$aux3+$aux4
 	if [ "$aux" -eq 0 ]; then
-		echo "[ OK ] Actualizacion del sistema"
+		echo -e "[ \e[1;32mOK\e[0m ] Actualizacion del sistema"
 	else
-		echo "[FAIL] Actualizacion del sistema"
+		echo -e "[ \e[1;31mFAIL\e[0m ] Actualizacion del sistema"
 	fi
 }
 function cambiarIdioma() {
 	sudo dpkg-reconfigure locales
 	if [ "$?" -eq 0 ]; then
-		echo "[ OK ] Idioma cambiado"
+		echo -e "[ \e[1;32mOK\e[0m ] Idioma cambiado"
 	else
-		echo "[FAIL] Idioma cambiado"
+		echo -e "[ \e[1;31mFAIL\e[0m ] Idioma cambiado"
 	fi
 }
 function contraseña() {
@@ -111,12 +111,12 @@ function aliaTerminal() {
 		aux2=$?
 		let aux=$aux1+$aux2
 	        if [ "$aux" -eq 0 ]; then
-	                echo "[ OK ] Registro de alias .bashrc"
+	               echo -e "[ \e[1;32mOK\e[0m ] Registro de alias .bashrc"
         	else
-	                echo "[FAIL] Registro de alias .bashrc"
+	               echo -e "[ \e[1;31mFAIL\e[0m ] Registro de alias .bashrc"
 	        fi
 	else
-	        echo "[ OK ] Los alias ya estaban registrados, saltando paso"
+	       echo -e "[ \e[1;32mOK\e[0m ] Los alias ya estaban registrados, saltando paso"
 	fi
 }
 function fuenteDesktop() {
@@ -146,9 +146,9 @@ function fondoPantalla() {
 	let var3=$var1+$var2
 
 	if [ "$var3" -eq 0 ]; then
-        	echo "[ OK ] Fondo de pantalla"
+        	echo -e "[ \e[1;32mOK\e[0m ] Fondo de pantalla"
 	else
-        	echo "[FAIL] Fondo de pantalla"
+        	 echo -e "[ \e[1;31mFAIL\e[0m ] Fondo de pantalla"
 	fi
 
 }
@@ -172,7 +172,7 @@ function resolucionPantalla() {
 
 	let aux4=$aux1+$aux2+$aux3
 	if [ "$aux4" -eq 0 ]; then
-        	echo "[ OK ] Cambio de resolucion de pantalla"
+        	echo -e "[ \e[1;32mOK\e[0m ] Cambio de resolucion de pantalla"
 	        echo -n "Eliminando copia de seguridad..."
 	        sudo rm /boot/config.txt.backup
         	if [[ "$?" -eq 0 ]]; then
@@ -181,7 +181,7 @@ function resolucionPantalla() {
                 	echo "ERROR"
         	fi
 	else
-        	echo "[FAIL] Error al cambiar la resolucion de pantalla"
+        	echo -e "[ \e[1;31mFAIL\e[0m ] Error al cambiar la resolucion de pantalla"
 	        echo -n "Restaurando el archivo original..."
 		sudo rm /boot/config.txt
 	        sudo cp /boot/config.txt.backup /boot/config.txt
