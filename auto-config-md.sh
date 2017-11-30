@@ -110,7 +110,7 @@ function aliaTerminal() {
 		source /home/$USER/.bashrc
 		aux2=$?
 		let aux=$aux1+$aux2
-	        if [ "aux" -eq 0 ]; then
+	        if [ "$aux" -eq 0 ]; then
 	                echo "[ OK ] Registro de alias .bashrc"
         	else
 	                echo "[FAIL] Registro de alias .bashrc"
