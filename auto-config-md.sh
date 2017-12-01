@@ -62,9 +62,6 @@ function customTerminal() {
 		fi
 	fi
 }
-function kernelUpdate() {
-	sudo rpi-update
-}
 function actualizarSistema() {
 	sudo apt-get update
 	aux1=$?
@@ -74,7 +71,10 @@ function actualizarSistema() {
 	aux3=$?
 	sudo apt-get -y autoremove
 	aux4=$?
-	let aux=$aux1+$aux2+$aux3+$aux4
+	sudo rpi-update
+	aux5=$?
+	
+	let aux=$aux1+$aux2+$aux3+$aux4+$aux5
 	if [ "$aux" -eq 0 ]; then
 		echo -e "[ \e[1;32mOK\e[0m ] Actualizacion del sistema"
 	else
@@ -82,11 +82,15 @@ function actualizarSistema() {
 	fi
 }
 function cambiarIdioma() {
+	sudo sed -i 's/country=.*/country=ES/' /etc/wpa_supplicant/wpa_supplicant.conf
+	aux1=$?
 	sudo dpkg-reconfigure locales
-	if [ "$?" -eq 0 ]; then
-		echo -e "[ \e[1;32mOK\e[0m ] Idioma cambiado"
+	aux2=$?
+	let aux=$aux1+$aux2
+	if [ "$aux" -eq 0 ]; then
+		echo -e "[ \e[1;32mOK\e[0m ] Ajustes español-España"
 	else
-		echo -e "[ \e[1;31mFAIL\e[0m ] Idioma cambiado"
+		echo -e "[ \e[1;31mFAIL\e[0m ] Ajuste español-España"
 	fi
 }
 function contraseña() {
@@ -200,14 +204,12 @@ function resolucionPantalla() {
 	        fi
 	fi
 }
-echo -n "¿Desea cambiar el idioma a Español?[y/n]"
+echo -n "¿Desea adaptar raspbian español-España?[y/n]"
 read idioma
 echo -n "¿Desea cambiar la contraseña del usuario $USER?[y/n]"
 read modpass
 echo -n "¿Desea actualizar todo el sistema?[y/n]"
 read actualizar
-echo -n "¿Desea actualizar el kernel de Raspbian?[y/n]"
-read kernelup
 echo -n "¿Desea cambiar el aspecto de la consola?[y/n]"
 read custom
 echo -n "¿Desea aumentar el tamaño de la fuente Desktop?[y/n]"
@@ -228,9 +230,6 @@ fi
 if [ "$modpass" = "y" ]; then
 	contraseña
 fi
-if [ "$actualizar" = "y" ]; then
-	actualizarSistema
-fi
 if [ "$aliax" = "y" ]; then
 	aliaTerminal
 fi
@@ -246,7 +245,8 @@ fi
 if [ "$custom" = "y" ]; then
 	customTerminal	
 fi
-if [ "$kernelup" = "y" ]; then
+if [ "$actualizar" = "y" ]; then
+	actualizarSistema
 	kernelUpdate
 fi
 if [ "$aliax" == "y" -o "$fondo" == "y" -o "$size" == "y" -o "$custom" = "y" -o "$sizeDesktop" = "y" -o "$kernelup" = "y" -o  "$actualizar" = "y" ] ; then
