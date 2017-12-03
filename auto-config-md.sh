@@ -93,6 +93,43 @@ function cambiarIdioma() {
 		echo -e "[ \e[1;31mFAIL\e[0m ] Ajuste español-España"
 	fi
 }
+function estaticaIP() {
+	echo "-------STATIC IP-------\n"
+	echo "Inserte SSID de la red"
+	read ssidd
+	echo "Inserte la IP que desea asignar (ej:192.168.1.125)"
+	read ipp
+	echo "Inserte la puerta de enlace (ej:192.168.1.1)"
+	read puertaEnlace
+	echo "Inserte DNS1 (ej:8.8.8.8)"
+	read dns1
+	echo "Inserte DNS2 (ej:8.8.4.4)"
+	read dns2
+	aux=`sudo grep -c "SSID"`
+	check=-1
+	if [ "aux" -eq 0]; then
+		echo "
+		\rSSID $ssidd
+		\rinform $ipp
+		\rstatic routers=$puertaEnlace
+		\rstatic domain_name_servers=$dns1
+		\rstatic domain_search=$dns2" | sudo tee -a /etc/dhcpcd.conf
+		check=$?
+	else
+		sed -i 's/SSID.*/SSID $ssidd/' /etc/dhcpcd.conf
+		sed -i 's/inform.*/inform $ipp/' /etc/dhcpcd.conf
+		sed -i 's/static routers.*/static routers=$puertaEnlace/' /etc/dhcpcd.conf
+		sed -i 's/static domain_name_servers.*/static_domain_servers=$dns1/' /etc/dhcpcd.conf
+		sed -i 's/static domain_search.*/static domain_search=$dns2/' /etc/dhcpcd.conf
+		check=$
+	fi
+	if [ "$check" -eq 0 ]; then
+	       echo -e "[ \e[1;32mOK\e[0m ] Añadir IP statica"
+	else
+	       echo -e "[ \e[1;31mFAIL\e[0m ] Añadir IP statica"
+	fi
+	
+}
 function contraseña() {
 	sudo passwd $USER
 }
@@ -208,6 +245,8 @@ echo -n "¿Desea adaptar raspbian español-España?[y/n]"
 read idioma
 echo -n "¿Desea cambiar la contraseña del usuario $USER?[y/n]"
 read modpass
+echo -n "¿Desea poner una IP local estatica?[y/n]"
+read staticIP
 echo -n "¿Desea actualizar todo el sistema?[y/n]"
 read actualizar
 echo -n "¿Desea cambiar el aspecto de la consola?[y/n]"
@@ -224,15 +263,23 @@ echo -n "(Recomendado)¿Desea reiniciar automaticamente despues de aplicar los c
 read reset
 
 
+# Script que requieren atención 
 if [ "$idioma" = "y" ]; then
 	cambiarIdioma
 fi
 if [ "$modpass" = "y" ]; then
 	contraseña
 fi
+if [ "$staticIP" = "y" ];then
+	estaticaIP
+fi
+
+
+# Script automatizados
 if [ "$aliax" = "y" ]; then
 	aliaTerminal
 fi
+
 if [ "$sizeDesktop" = "y" ]; then
 	fuenteDesktop
 fi
