@@ -145,7 +145,6 @@ function aliaTerminal() {
 	        alias buscar='apt-cache search'
 		alias borrar='rm'
 		alias borrarr='rm -rf'
-		alias clonargithub='git clone https://github.com/'
 	        alias desinstalar='sudo apt-get purge'" | tee -a /home/$USER/.bashrc
 		aux1=$?
 		source /home/$USER/.bashrc
