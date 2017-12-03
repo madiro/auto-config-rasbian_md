@@ -270,7 +270,8 @@ if [ "$modpass" = "y" ]; then
 	contraseña
 fi
 if [ "$staticIP" = "y" ];then
-	estaticaIP
+	#estaticaIP
+	echo "metodo en construccion :S"
 fi
 
 
