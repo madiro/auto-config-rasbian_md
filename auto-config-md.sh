@@ -93,6 +93,45 @@ function cambiarIdioma() {
 		echo -e "[ \e[1;31mFAIL\e[0m ] Ajuste español-España"
 	fi
 }
+function interfacePermanente() {
+	echo "
+	RPI3 USB OPTION:1 
+	+---------------+ 
+	| wlan1 | wlan2 | 
+	+---------------+ 
+	| wlan3 | wlan4 | 
+	+---------------+ 
+	"
+	usb1="wlan1"
+	usb2="wlan2"
+	usb3="wlan3"
+	usb4="wlan4"
+
+
+	if [ -f /etc/udev/rules.d/72-wlan-geo-dependent.rules ]; then
+		echo -n "El fichero ya existe, compruebe manualmente la configuración existente"	
+	else
+		sudo touch /etc/udev/rules.d/72-wlan-geo-dependent.rules
+		echo "
+			ACTION==\"add\", SUBSYSTEM==\"net\", SUBSYSTEMS==\"sdio\", KERNELS==\"mmc1:0001:1\", NAME=\"wlan0\"
+			ACTION==\"add\", SUBSYSTEM==\"net\", SUBSYSTEMS==\"usb\", KERNELS==\"1-1.2\", NAME=\"$usb1\"
+			ACTION==\"add\", SUBSYSTEM==\"net\", SUBSYSTEMS==\"usb\", KERNELS==\"1-1.4\", NAME=\"$usb2\"
+			ACTION==\"add\", SUBSYSTEM==\"net\", SUBSYSTEMS==\"usb\", KERNELS==\"1-1.3\", NAME=\"$usb3\"
+			ACTION==\"add\", SUBSYSTEM==\"net\", SUBSYSTEMS==\"usb\", KERNELS==\"1-1.5\", NAME=\"$usb4\"
+			" | sudo tee -a /etc/udev/rules.d/72-wlan-geo-dependent.rules
+			if [ "$?" -eq "0" ]; then
+				echo -e "[ \e[1;32mOK\e[0m ] Renombres interfaces"
+				echo "Reinicie para que los cambios tengan efecto"
+			else
+				echo -e "[ \e[1;31mFAIL\e[0m ] Renombres interfaces"
+			fi
+
+	fi
+
+	
+}
+
+
 function estaticaIP() {
 	echo "-------STATIC IP-------\n"
 	echo "Inserte SSID de la red"
@@ -244,8 +283,10 @@ echo -n "¿Desea adaptar raspbian español-España?[y/n]"
 read idioma
 echo -n "¿Desea cambiar la contraseña del usuario $USER?[y/n]"
 read modpass
-echo -n "¿Desea poner una IP local estatica?[y/n]"
-read staticIP
+#echo -n "¿Desea poner una IP local estatica?[y/n]"
+#read staticIP
+echo -n "¿Desea renombrar de forma permanente las interfaces wifi?[y/n]"
+read renombrar
 echo -n "¿Desea actualizar todo el sistema?[y/n]"
 read actualizar
 echo -n "¿Desea cambiar el aspecto de la consola?[y/n]"
@@ -275,7 +316,11 @@ if [ "$staticIP" = "y" ];then
 fi
 
 
+
 # Script automatizados
+if [ "$renombrar" = "y" ];then
+	interfacePermanente
+fi
 if [ "$aliax" = "y" ]; then
 	aliaTerminal
 fi
