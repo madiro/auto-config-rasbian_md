@@ -65,11 +65,11 @@ function customTerminal() {
 function actualizarSistema() {
 	sudo apt-get update
 	aux1=$?
-	sudo apt-get -y upgrade
+	sudo apt-get -y upgrade -qq
 	aux2=$?
 	sudo apt-get autoclean
 	aux3=$?
-	sudo apt-get -y autoremove
+	sudo apt-get -y autoremove -qq
 	aux4=$?
 	sudo rpi-update
 	aux5=$?
@@ -225,9 +225,9 @@ function fondoPantalla() {
 	let var3=$var1+$var2
 
 	if [ "$var3" -eq 0 ]; then
-        	echo -e "[ \e[1;32mOK\e[0m ] Fondo de pantalla"
+		echo -e "[ \e[1;32mOK\e[0m ] Fondo de pantalla"
 	else
-        	 echo -e "[ \e[1;31mFAIL\e[0m ] Fondo de pantalla"
+		echo -e "[ \e[1;31mFAIL\e[0m ] Fondo de pantalla"
 	fi
 
 }
@@ -251,46 +251,103 @@ function resolucionPantalla() {
 
 	let aux4=$aux1+$aux2+$aux3
 	if [ "$aux4" -eq 0 ]; then
-        	echo -e "[ \e[1;32mOK\e[0m ] Cambio de resolucion de pantalla"
-	        echo -n "Eliminando copia de seguridad..."
-	        sudo rm /boot/config.txt.backup
-        	if [[ "$?" -eq 0 ]]; then
-                	echo "OK"
-        	else
-                	echo "ERROR"
-        	fi
+		echo -e "[ \e[1;32mOK\e[0m ] Cambio de resolucion de pantalla"
+		echo -n "Eliminando copia de seguridad..."
+		sudo rm /boot/config.txt.backup
+		if [[ "$?" -eq 0 ]]; then
+				echo "OK"
+		else
+				echo "ERROR"
+		fi
 	else
-        	echo -e "[ \e[1;31mFAIL\e[0m ] Error al cambiar la resolucion de pantalla"
-	        echo -n "Restaurando el archivo original..."
+		echo -e "[ \e[1;31mFAIL\e[0m ] Error al cambiar la resolucion de pantalla"
+		echo -n "Restaurando el archivo original..."
 		sudo rm /boot/config.txt
-	        sudo cp /boot/config.txt.backup /boot/config.txt
-        	if [[ "$?" -eq 0 ]]; then
-	                echo "OK"
-	        else
-	                echo "ERROR"
-        	        exit
-	        fi
-        	echo -n "Eliminando copia de seguridad..."
-	        sudo rm /boot/config.txt.backup
-	        if [[ "$?" -eq 0 ]]; then
-	                echo "OK"
-	        else
-	                echo "ERROR"
-	        fi
+		sudo cp /boot/config.txt.backup /boot/config.txt
+		if [[ "$?" -eq 0 ]]; then
+				echo "OK"
+		else
+				echo "ERROR"
+				exit
+		fi
+		echo -n "Eliminando copia de seguridad..."
+		sudo rm /boot/config.txt.backup
+		if [[ "$?" -eq 0 ]]; then
+				echo "OK"
+		else
+				echo "ERROR"
+		fi
 	fi
 }
+function chrome() {
+	echo -n "Instalando Google Chrome"
+	wget -c https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O chrome64.deb
+	sudo dpkg -i chrome64.deb
+	if [[ "$?" -eq 0 ]]; then
+		echo -e "[ \e[1;32mOK\e[0m ] Instalado Google-Chomre"
+	else
+		echo -e "[ \e[1;31mFAIL\e[0m ] Instalado Google-Chomre"
+	fi
+}
+function notepadd() {
+	echo -n "Instalando Notepadd"
+	sudo add-apt-repository -y ppa:notepadqq-team/notepadqq
+	sudo apt-get update -qq
+	sudo apt-get install -qq -y notepadqq
+
+	if [[ "$?" -eq 0 ]]; then
+		echo -e "[ \e[1;32mOK\e[0m ] Instalado Notepadd"
+	else
+		echo -e "[ \e[1;31mFAIL\e[0m ] Instalado Notepadd"
+	fi
+}
+function overlock() {
+	echo -n " \e[1;31mAPLICANDO CONFIGURACION OVERLOCK\e[0m "
+	sudo sed -i 's/.*rm_freq=.*/#arm_freq=/' /boot/config.txt
+	sudo sed -i 's/.*ver_voltage=.*/#over_voltage=/' /boot/config.txt
+	sudo sed -i 's/.*pu_freq=.*/#gpu_freq=/' /boot/config.txt
+	sudo sed -i 's/.*dram_freq=.*/#sdram_freq=/' /boot/config.txt
+	sudo sed -i 's/.*dram_schmoo=.*/#sdram_schmoo=/' /boot/config.txt
+	sudo sed -i 's/.*ver_voltage_sdram_p.*/#over_voltage_sdram_p=/' /boot/config.txt
+	sudo sed -i 's/.*ver_voltage_sdram_i.*/#over_voltage_sdram_i=/' /boot/config.txt
+	sudo sed -i 's/.*ver_voltage_sdram_c.*/#over_voltage_sdram_c=/' /boot/config.txt
+
+
+	echo "arm_freq=1372
+over_voltage=5
+gpu_freq=588
+
+sdram_freq=588
+sdram_schmoo=0x02000020
+over_voltage_sdram_p=6
+over_voltage_sdram_i=4
+over_voltage_sdram_c=4" | tee -a /boot/config.txt
+	if [[ "$?" -eq 0 ]]; then
+		echo -e "[ \e[1;32mOK\e[0m ] Aplicado OVERLOCK"
+	else
+		echo -e "[ \e[1;31mFAIL\e[0m ] Error al aplicar OVERLOCK, por favor, revise /boot/config.txt"
+	fi
+
+}
+
 echo -n "¿Desea adaptar raspbian español-España?[y/n]"
 read idioma
-echo -n "¿Desea cambiar la contraseña del usuario $USER?[y/n]"
+echo -n "¿Deseacambiar la contraseña del usuario $USER?[y/n]"
 read modpass
 #echo -n "¿Desea poner una IP local estatica?[y/n]"
 #read staticIP
-echo -n "¿Desea renombrar de forma permanente las interfaces wifi?[y/n]"
+echo -n "¿Desea renombrar de forma permanente las interfaces wifi (puertos USB)?[y/n]"
 read renombrar
 echo -n "¿Desea actualizar todo el sistema?[y/n]"
 read actualizar
 echo -n "¿Desea cambiar el aspecto de la consola?[y/n]"
 read custom
+echo -n "¿Des[y/n]ea instalar Chrome?"
+read chrome
+echo -n "¿Desea instalar Notepad++?[y/n]"
+read notepadd
+echo -n "¿Desea aplicar overlock: 1372 | 500 | 500 | 500 | 5 ?[y/n]"
+read overlock
 echo -n "¿Desea aumentar el tamaño de la fuente Desktop?[y/n]"
 read sizeDesktop 
 echo -n "¿Desea ingresar alias?[y/n]"
@@ -324,7 +381,6 @@ fi
 if [ "$aliax" = "y" ]; then
 	aliaTerminal
 fi
-
 if [ "$sizeDesktop" = "y" ]; then
 	fuenteDesktop
 fi
@@ -341,12 +397,21 @@ if [ "$actualizar" = "y" ]; then
 	actualizarSistema
 	kernelUpdate
 fi
-if [ "$aliax" == "y" -o "$fondo" == "y" -o "$size" == "y" -o "$custom" = "y" -o "$sizeDesktop" = "y" -o "$kernelup" = "y" -o  "$actualizar" = "y" ] ; then
+if [ "$chrome" ]; then
+	chrome
+fi
+if [ "$notepadd" ]; then
+	notepadd
+fi
+if [ "$overlock" ]; then
+	overlock
+fi
+
+if [ "$overlock" == "y" -o "$aliax" == "y" -o "$fondo" == "y" -o "$size" == "y" -o "$custom" = "y" -o "$sizeDesktop" = "y" -o "$kernelup" = "y" -o  "$actualizar" = "y" ] ; then
   if [[ "$reset" = "y" ]] ; then
     shutdown -r now
   fi
 else
   echo "No se ha aplicado ningun cambio, no es necesario reiniciar"
 fi
-
 
